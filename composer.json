@@ -1,0 +1,34 @@
+{
+    "name": "dieschittigs/contao-classselect-bundle",
+    "description": "Select classnames for pages, articles and content elements",
+    "type": "contao-bundle",
+    "keywords":["contao","class","css","bundle"],
+    "require": {
+        "php": "^7.0",
+        "contao/core-bundle": "^4.4",
+        "menatwork/contao-multicolumnwizard-bundle": "3.4.*@dev"
+    },
+    "license": "MIT-0",
+    "authors": [
+        {
+            "name": "Martin Schittig",
+            "email": "martin@dieschittigs.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DieSchittigs\\ClassselectBundle\\" : "src/"
+        },
+        "classmap": [
+            "src/Resources/contao/"
+		],
+		"exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/"
+		]
+    },
+    "extra": {
+		"contao-manager-plugin": "DieSchittigs\\ClassselectBundle\\ContaoManager\\Plugin"
+	}
+}
