@@ -18,7 +18,6 @@ class HelperClass extends \Frontend
             $objElement->cssID[0], 
             $objElement->cssID[1].' ' . implode(' ', unserialize($objElement->customClass))
         ];
-        dump($objElement->cssID);
         return $objElement->generate();
     }
 }
