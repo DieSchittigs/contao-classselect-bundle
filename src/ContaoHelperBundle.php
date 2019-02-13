@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace DieSchittigs\ClassselectBundle;
+namespace DieSchittigs\HelperBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ContaoClassselectBundle extends Bundle
+class ContaoHelperBundle extends Bundle
 {
 
 }

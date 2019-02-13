@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DieSchittigs\ClassselectBundle\ContaoManager;
+namespace DieSchittigs\HelperBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use DieSchittigs\ClassselectBundle\ContaoClassselectBundle;
+use DieSchittigs\HelperBundle\ContaoHelperBundle;
 
 class Plugin implements BundlePluginInterface
 {
@@ -18,7 +18,7 @@ class Plugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser): array
     {
         return [
-            BundleConfig::create(ContaoClassselectBundle::class)
+            BundleConfig::create(ContaoHelperBundle::class)
                 ->setLoadAfter([
                     'Contao\CoreBundle\ContaoCoreBundle'
                 ])

@@ -1,6 +1,6 @@
 {
-    "name": "dieschittigs/contao-classselect-bundle",
-    "description": "Select classnames for pages, articles and content elements",
+    "name": "dieschittigs/contao-dieschittigs-helpers-bundle",
+    "description": "Some helpers for contao",
     "type": "contao-bundle",
     "keywords":["contao","class","css","bundle"],
     "require": {
@@ -17,7 +17,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "DieSchittigs\\ClassselectBundle\\" : "src/"
+            "DieSchittigs\\HelperBundle\\" : "src/"
         },
         "classmap": [
             "src/Resources/contao/"
@@ -29,6 +29,6 @@
 		]
     },
     "extra": {
-		"contao-manager-plugin": "DieSchittigs\\ClassselectBundle\\ContaoManager\\Plugin"
+		"contao-manager-plugin": "DieSchittigs\\HelperBundle\\ContaoManager\\Plugin"
 	}
 }

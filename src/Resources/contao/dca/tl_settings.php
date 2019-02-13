@@ -13,17 +13,16 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['classNames'] = [
     'inputType' => 'multiColumnWizard',
     'eval'      => [
         'columnFields' => [
-            
             'classTitle' => [
                 'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['classTitle'],
-                'exclude'   => true,
                 'inputType' => 'text',
-                'eval'      => ['style' => 'width:200px' ],
+                'eval'      => ['mandatory' => true, 'style' => 'width:200px' ],
             ],
             'className' => [
                 'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['className'],
                 'inputType' => 'text',
-                'eval'      => ['style' => 'width:200px']
+                // Also does not work 'save_callback' => ['tl_settings_helper', 'checkClassname'],
+                'eval'      => ['mandatory' => true, 'style' => 'width:200px']
             ],
             'showOnArticle' => [
                 'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['showOnArticle'],
@@ -33,24 +32,27 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['classNames'] = [
                 'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['showOnElement'],
                 'inputType' => 'checkbox'
             ],
+            /* Multicolumnwizard is Beta ...
             'selectElement' => [
                 'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['selectElement'],
                 'inputType' => 'select',
+                'default'   => 'all',
                 'eval'      => [
                     'style'              => 'width:250px',
-                    'includeBlankOption' => true,
+                    'chosen'             => true,
+                    'multiple'           => true
                 ],
-                'options_callback'  => array('tl_settings_own', 'getContentElements') 
-            ]
-
-        ],
+                'options_callback'  => ['tl_settings_helper', 'getContentElements'],
+                'reference' => &$GLOBALS['TL_LANG']['CTE'],
+            ]*/
+        ]
     ]
 ];
 
-class tl_settings_own extends tl_settings {
+class tl_settings_helper extends tl_settings {
     public function getContentElements()
     {
-		$groups = array();
+		$groups = ['all'=> $GLOBALS['TL_LANG']['tl_settings']['classNames']['selectElement']['all']];
 		foreach ($GLOBALS['TL_CTE'] as $k=>$v)
 		{
 			foreach (array_keys($v) as $kk)
@@ -59,5 +61,19 @@ class tl_settings_own extends tl_settings {
 			}
 		}
 		return $groups;
-	}
+    }
+    
+    public function checkClassname($varValue, Contao\DataContainer $dc){
+
+        //Make alphanumeric (removes all other characters)
+        $varValue = preg_replace("/[^a-z0-9_\s-]/", "", $varValue);
+        //Clean up multiple dashes or whitespaces
+        $varValue = preg_replace("/[\s-]+/", " ", $varValue);
+        //Convert whitespaces and underscore to dash
+        $varValue = preg_replace("/[\s_]/", "-", $varValue);
+        //First character must not be integer
+        if(is_int(substr($varValue, 0, 1))) return "int-" . $varValue;
+
+        return $varValue;
+    }
 }
