@@ -16,7 +16,7 @@ class HelperClass extends \Frontend
 
     public function addClassesToElement($objRow, $strBuffer, $objElement){
         
-        if (!is_array($arrCustom = unserialize($objElement->customClass))) return;
+        if (!is_array($arrCustom = unserialize($objElement->customClass))) return $strBuffer;
 
         $objElement->cssID = [
             $objElement->cssID[0], 
