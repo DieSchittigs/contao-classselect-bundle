@@ -42,16 +42,11 @@ class tl_content_helper extends tl_content
     {
         if($dc->activeRecord->type != "wrapperStart") return;
         if(!empty($dc->activeRecord->tstamp)) return;
+
         $model = new \ContentModel();
-
-        // $model->setRow((array) $dc->activeRecord);
-
         $model->type = 'wrapperStop';
-        $model->headline = '';
         $model->ptable = $dc->activeRecord->ptable;
         $model->pid = $dc->activeRecord->pid;
-        $model->cssID = $dc->activeRecord->cssID;
-        $model->com_template = $dc->activeRecord->com_template;
         $model->tstamp = Date::floorToMinute();
         $model->sorting = $dc->activeRecord->sorting * 2;
 
