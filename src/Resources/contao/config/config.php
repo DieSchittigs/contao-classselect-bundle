@@ -8,8 +8,13 @@
  * @license LGPL-3.0+
  */
 
-// Own Wrapper
+if (TL_MODE=="BE") {
+    $GLOBALS['TL_CSS'][] = 'bundles/contaohelper/backend.css';
+}
 
+
+
+// Own Wrapper
 $GLOBALS['TL_CTE']['wrapper'] = [
     'wrapperStart' => 'DieSchittigs\DieSchittigsHelpers\ContentWrapperStart',
     'wrapperStop' => 'DieSchittigs\DieSchittigsHelpers\ContentWrapperStop'
