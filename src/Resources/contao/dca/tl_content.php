@@ -52,7 +52,7 @@ class tl_content_helper extends tl_content
         $model->pid = $dc->activeRecord->pid;
         $model->cssID = $dc->activeRecord->cssID;
         $model->com_template = $dc->activeRecord->com_template;
-        $model->tstamp = $dc->activeRecord->tstamp;
+        $model->tstamp = Date::floorToMinute();
         $model->sorting = $dc->activeRecord->sorting * 2;
 
         $model->save();
