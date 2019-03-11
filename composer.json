@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.0",
         "contao/core-bundle": "^4.4",
-        "menatwork/contao-multicolumnwizard-bundle": "3.4.*@dev"
+        "menatwork/contao-multicolumnwizard-bundle": "3.4"
     },
     "license": "MIT-0",
     "authors": [
