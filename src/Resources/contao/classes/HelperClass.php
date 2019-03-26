@@ -15,13 +15,8 @@ class HelperClass extends \Frontend
 
 
     public function addClassesToElement($objRow, $strBuffer, $objElement){
-        
         if (!is_array($arrCustom = unserialize($objElement->customClass))) return $strBuffer;
-
-        $objElement->cssID = [
-            $objElement->cssID[0], 
-            $objElement->cssID[1].' ' . implode(' ', $arrCustom)
-        ];
-        return $objElement->generate();
+        $strBuffer = str_replace('class="ce_', 'class="ce_' . $objElement->type . ' ' . implode(' ', $arrCustom), $strBuffer);
+        return $strBuffer;
     }
 }
