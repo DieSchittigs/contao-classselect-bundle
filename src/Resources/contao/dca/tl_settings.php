@@ -24,6 +24,10 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['classNames'] = [
                 // Also does not work 'save_callback' => ['tl_settings_helper', 'checkClassname'],
                 'eval'      => ['mandatory' => true, 'style' => 'width:200px']
             ],
+            'showOnPage' => [
+                'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['showOnPage'],
+                'inputType' => 'checkbox'
+            ],
             'showOnArticle' => [
                 'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['showOnArticle'],
                 'inputType' => 'checkbox'
@@ -32,7 +36,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['classNames'] = [
                 'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['showOnElement'],
                 'inputType' => 'checkbox'
             ],
-            /* Multicolumnwizard is Beta ...
+            /* Multicolumnwizard is Beta ... 
             'selectElement' => [
                 'label'     => &$GLOBALS['TL_LANG']['tl_settings']['classNames']['selectElement'],
                 'inputType' => 'select',

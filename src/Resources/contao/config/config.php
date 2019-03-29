@@ -24,5 +24,6 @@ $GLOBALS['TL_WRAPPERS']['start'][] = 'wrapperStart';
 $GLOBALS['TL_WRAPPERS']['stop'][] = 'wrapperStop';
 
 // CSS class replacement
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('DieSchittigs\\DieSchittigsHelpers\\HelperClass', 'addClassesToPage');
 $GLOBALS['TL_HOOKS']['getArticle'][] = array('DieSchittigs\\DieSchittigsHelpers\\HelperClass', 'addClassesToArticle');
 $GLOBALS['TL_HOOKS']['getContentElement'][] = array('DieSchittigs\\DieSchittigsHelpers\\HelperClass', 'addClassesToElement');
