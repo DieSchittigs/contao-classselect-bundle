@@ -26,7 +26,7 @@ class tl_article_helper extends tl_article
         $arrReturn = [];
         foreach($arrValues as $class) {
             if(!$class['showOnArticle']) continue;
-            $arrReturn[$class['className']] = $class['classTitle'].' [.' . $class['className'] . ']';
+            $arrReturn[$class['className']] = $class['classTitle'].' [' . $class['className'] . ']';
             
         }
 
