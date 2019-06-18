@@ -31,7 +31,7 @@ class tl_content_helper extends tl_content
         foreach($arrValues as $class) {
             if(!$class['showOnElement']) continue;
             
-            $arrReturn[$class['className']] = $class['classTitle'].' [.' . $class['className'] . ']';
+            $arrReturn[$class['className']] = $class['classTitle'].' [' . $class['className'] . ']';
             
         }
 
