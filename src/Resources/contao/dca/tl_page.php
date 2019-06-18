@@ -26,7 +26,7 @@ class tl_page_helper extends tl_page
         $arrReturn = [];
         foreach($arrValues as $class) {
             if(!$class['showOnPage']) continue;
-            $arrReturn[$class['className']] = $class['classTitle'].' [.' . $class['className'] . ']';
+            $arrReturn[$class['className']] = $class['classTitle'].' [' . $class['className'] . ']';
             
         }
 
