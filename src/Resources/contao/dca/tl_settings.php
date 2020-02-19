@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['classNames'] = [
     ]
 ];
 
-class tl_settings_helper extends tl_settings {
+class tl_settings_helper {
     public function getContentElements()
     {
 		$groups = ['all'=> $GLOBALS['TL_LANG']['tl_settings']['classNames']['selectElement']['all']];
