@@ -1,4 +1,5 @@
 <?php
+use DieSchittigs\DieSchittigsHelpers\ClassesModel;
 
 $GLOBALS['TL_DCA']['tl_page']['palettes']['regular'] = str_replace(
     '{expert_legend:hide}',
@@ -20,14 +21,14 @@ class tl_page_helper extends tl_page
 {
     public function getClasses()
     {
-        $arrValues = unserialize($GLOBALS['TL_CONFIG']['classNames']);
-        if(!is_array($arrValues)) return;
+
+        $objClasses = ClassesModel::findByShowOnPage(1);
+        
+        if($objClasses === null) return;
 
         $arrReturn = [];
-        foreach($arrValues as $class) {
-            if(!$class['showOnPage']) continue;
-            $arrReturn[$class['className']] = $class['classTitle'].' [' . $class['className'] . ']';
-            
+        while($objClasses->next()) {
+            $arrReturn[$objClasses->id] = $objClasses->name.' [' . $objClasses->cssClass . ']';
         }
 
         return $arrReturn;

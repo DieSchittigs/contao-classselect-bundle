@@ -1,4 +1,5 @@
 <?php
+use DieSchittigs\DieSchittigsHelpers\ClassesModel;
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['wrapperStart'] = '{type_legend},type,headline;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['wrapperStop'] = '{type_legend},type;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests;{invisible_legend:hide},invisible,start,stop';
@@ -24,15 +25,13 @@ class tl_content_helper extends tl_content
 {
     public function getClasses()
     {
-        $arrValues = unserialize($GLOBALS['TL_CONFIG']['classNames']);
-        if(!is_array($arrValues)) return;
+        $objClasses = ClassesModel::findByShowOnElement(1);
+        
+        if($objClasses === null) return;
 
         $arrReturn = [];
-        foreach($arrValues as $class) {
-            if(!$class['showOnElement']) continue;
-            
-            $arrReturn[$class['className']] = $class['classTitle'].' [' . $class['className'] . ']';
-            
+        while($objClasses->next()) {
+            $arrReturn[$objClasses->id] = $objClasses->name.' [' . $objClasses->cssClass . ']';
         }
 
         return $arrReturn;

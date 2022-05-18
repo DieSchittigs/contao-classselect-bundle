@@ -1,5 +1,7 @@
 <?php
 
+use DieSchittigs\DieSchittigsHelpers\ClassesModel;
+
 $GLOBALS['TL_DCA']['tl_article']['palettes']['default'] = str_replace(
     '{expert_legend:hide}',
     '{design_legend},customClass;{expert_legend:hide}',
@@ -20,14 +22,13 @@ class tl_article_helper extends tl_article
 {
     public function getClasses()
     {
-        $arrValues = unserialize($GLOBALS['TL_CONFIG']['classNames']);
-        if(!is_array($arrValues)) return;
+        $objClasses = ClassesModel::findByShowOnArticle(1);
+        
+        if($objClasses === null) return;
 
         $arrReturn = [];
-        foreach($arrValues as $class) {
-            if(!$class['showOnArticle']) continue;
-            $arrReturn[$class['className']] = $class['classTitle'].' [' . $class['className'] . ']';
-            
+        while($objClasses->next()) {
+            $arrReturn[$objClasses->id] = $objClasses->name.' [' . $objClasses->cssClass . ']';
         }
 
         return $arrReturn;

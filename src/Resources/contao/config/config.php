@@ -7,12 +7,13 @@
  *
  * @license LGPL-3.0+
  */
+use DieSchittigs\DieSchittigsHelpers\ClassesModel;
 
 if (TL_MODE=="BE") {
     $GLOBALS['TL_CSS'][] = 'bundles/contaohelper/backend.css';
 }
 
-
+$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_classes';
 
 // Own Wrapper
 $GLOBALS['TL_CTE']['wrapper'] = [
@@ -27,3 +28,5 @@ $GLOBALS['TL_WRAPPERS']['stop'][] = 'wrapperStop';
 $GLOBALS['TL_HOOKS']['generatePage'][] = array('DieSchittigs\\DieSchittigsHelpers\\HelperClass', 'addClassesToPage');
 $GLOBALS['TL_HOOKS']['getArticle'][] = array('DieSchittigs\\DieSchittigsHelpers\\HelperClass', 'addClassesToArticle');
 $GLOBALS['TL_HOOKS']['getContentElement'][] = array('DieSchittigs\\DieSchittigsHelpers\\HelperClass', 'addClassesToElement');
+
+$GLOBALS['TL_MODELS']['tl_classes'] = ClassesModel::class;
