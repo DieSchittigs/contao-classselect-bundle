@@ -2,11 +2,15 @@
     "name": "dieschittigs/contao-dieschittigs-helpers-bundle",
     "description": "Some helpers for contao",
     "type": "contao-bundle",
-    "keywords":["contao","class","css","bundle"],
+    "keywords": [
+        "contao",
+        "class",
+        "css",
+        "bundle"
+    ],
     "require": {
         "php": "^7.0",
-        "contao/core-bundle": "^4.4",
-        "menatwork/contao-multicolumnwizard-bundle": "^3.3"
+        "contao/core-bundle": "^4.9"
     },
     "license": "MIT-0",
     "authors": [
@@ -17,18 +21,18 @@
     ],
     "autoload": {
         "psr-4": {
-            "DieSchittigs\\HelperBundle\\" : "src/"
+            "DieSchittigs\\HelperBundle\\": "src/"
         },
         "classmap": [
             "src/Resources/contao/"
-		],
-		"exclude-from-classmap": [
+        ],
+        "exclude-from-classmap": [
             "src/Resources/contao/config/",
             "src/Resources/contao/dca/",
             "src/Resources/contao/languages/"
-		]
+        ]
     },
     "extra": {
-		"contao-manager-plugin": "DieSchittigs\\HelperBundle\\ContaoManager\\Plugin"
-	}
+        "contao-manager-plugin": "DieSchittigs\\HelperBundle\\ContaoManager\\Plugin"
+    }
 }
