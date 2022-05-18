@@ -3,6 +3,7 @@
 
 use Contao\DataContainer;
 use Contao\DC_Table;
+use DieSchittigs\DieSchittigsHelpers\ClassesModel;
 
 $GLOBALS['TL_DCA']['tl_classes'] = array
 (
@@ -115,23 +116,37 @@ $GLOBALS['TL_DCA']['tl_classes'] = array
 			'exclude'                 => true,
 			'search'                  => true,
 			'eval'                    => array('maxlength'=>64, 'tl_class'=>'w50'),
+			'save_callback'           => array
+			(
+				static function ($value)
+				{
+					if (!preg_match('/^[_a-zA-Z]+[_a-zA-Z0-9-]*$/', $value))
+					{
+						throw new RuntimeException($GLOBALS['TL_LANG']['ERR']['invalidClassName']);
+					}
+					return $value;
+				}
+			),
 			'sql'                     => "varchar(255) NOT NULL default ''"
         ),
         'showOnPage' => [
             'inputType'               => 'checkbox',
             'exclude'                 => true,
+			'filter'				  => true,
 			'eval'                    => array('tl_class'=>'w50 m12 clr'),
 			'sql'                     => "char(1) NOT NULL default ''"
         ],
         'showOnArticle' => [
             'inputType'               => 'checkbox',
             'exclude'                 => true,
+			'filter'				  => true,
 			'eval'                    => array('tl_class'=>'w50 m12 clr'),
 			'sql'                     => "char(1) NOT NULL default ''"
             ],
         'showOnElement' => [
             'inputType'               => 'checkbox',
             'exclude'                 => true,
+			'filter'				  => true,
 			'eval'                    => array('tl_class'=>'w50 m12 clr'),
 			'sql'                     => "char(1) NOT NULL default ''"
         ],
@@ -154,8 +169,9 @@ class tl_classes extends Backend
 		$this->import(BackendUser::class, 'User');
 	}
 
+
 	/**
-	 * List an image size
+	 * List a class
 	 *
 	 * @param array $row
 	 *
@@ -168,135 +184,13 @@ class tl_classes extends Backend
 
 		$html .= ' <span style="color:#999;padding-left:3px;font-family:monospace">[ .' . $row['cssClass'] . ' ]</span>';
         
-        $html .= ($row['showOnPage']) ? '<span style="color:#999;padding-left:3px;">P</span>' : '';
-        $html .= ($row['showOnArticle']) ? '<span style="color:#999;padding-left:3px;">A</span>' : '';
-        $html .= ($row['showOnElement']) ? '<span style="color:#999;padding-left:3px;">P</span>' : '';
+        $html .= ($row['showOnPage']) ? '<span style="color:white;margin-left:3px;background: #666; padding:0 2px; font-size: 90%;border-radius:2px;">Pages ✔</span>' : '';
+        $html .= ($row['showOnArticle']) ? '<span style="color:white;margin-left:3px;background: #888; padding:0 2px; font-size: 90%;border-radius:2px;">Articles ✔</span>' : '';
+        $html .= ($row['showOnElement']) ? '<span style="color:white;margin-left:3px;background: #aaa; padding:0 2px; font-size: 90%;border-radius:2px;">Elements ✔</span>' : '';
 
 		$html .= "</div>\n";
 
 		return $html;
 	}
 
-	/**
-	 * Return the edit header button
-	 *
-	 * @param array  $row
-	 * @param string $href
-	 * @param string $label
-	 * @param string $title
-	 * @param string $icon
-	 * @param string $attributes
-	 *
-	 * @return string
-	 */
-	public function editHeader($row, $href, $label, $title, $icon, $attributes)
-	{
-		return System::getContainer()->get('security.helper')->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELDS_OF_TABLE, 'tl_classes') ? '<a href="' . $this->addToUrl($href . '&amp;id=' . $row['id']) . '" title="' . StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ' : Image::getHtml(preg_replace('/\.svg$/i', '_.svg', $icon)) . ' ';
-	}
-
-	/**
-	 * Return the image format options
-	 *
-	 * @param DataContainer $dc
-	 *
-	 * @return array
-	 */
-	public function getFormats(DataContainer $dc=null)
-	{
-		$formats = array();
-		$missingSupport = array();
-
-		if ($dc->value)
-		{
-			$formats = StringUtil::deserialize($dc->value, true);
-		}
-
-		foreach ($this->getSupportedFormats() as $format => $isSupported)
-		{
-			if (!in_array($format, System::getContainer()->getParameter('contao.image.valid_extensions')))
-			{
-				continue;
-			}
-
-			if (!$isSupported)
-			{
-				$missingSupport[] = $format;
-
-				continue;
-			}
-
-			$formats[] = "png:$format,png";
-			$formats[] = "jpg:$format,jpg;jpeg:$format,jpeg";
-			$formats[] = "gif:$format,gif";
-			$formats[] = "$format:$format,png";
-			$formats[] = "$format:$format,jpg";
-		}
-
-		if ($missingSupport)
-		{
-			$GLOBALS['TL_DCA']['tl_classes']['fields']['formats']['label'] = array
-			(
-				$GLOBALS['TL_LANG']['tl_classes']['formats'][0],
-				sprintf($GLOBALS['TL_LANG']['tl_classes']['formatsNotSupported'], implode(', ', $missingSupport)),
-			);
-		}
-
-		$options = array();
-		$formats = array_values(array_unique($formats));
-
-		foreach ($formats as $format)
-		{
-			list($first) = explode(';', $format);
-			list($from, $to) = explode(':', $first);
-			$chunks = array_values(array_diff(explode(',', $to), array($from)));
-
-			$options[$format] = strtoupper($from) . ' → ' . strtoupper($chunks[0]);
-		}
-
-		return $options;
-	}
-
-	/**
-	 * Check if WEBP, AVIF, HEIC or JXL is supported
-	 *
-	 * @return array
-	 */
-	private function getSupportedFormats()
-	{
-		$supported = array
-		(
-			'webp' => false,
-			'avif' => false,
-			'heic' => false,
-			'jxl' => false,
-		);
-
-		$imagine = System::getContainer()->get('contao.image.imagine');
-
-		if ($imagine instanceof ImagickImagine)
-		{
-			foreach (array_keys($supported) as $format)
-			{
-				$supported[$format] = in_array(strtoupper($format), Imagick::queryFormats(strtoupper($format)), true);
-			}
-		}
-
-		if ($imagine instanceof GmagickImagine)
-		{
-			foreach (array_keys($supported) as $format)
-			{
-				$supported[$format] = in_array(strtoupper($format), (new Gmagick())->queryformats(strtoupper($format)), true);
-			}
-		}
-
-		if ($imagine instanceof GdImagine)
-		{
-			foreach (array_keys($supported) as $format)
-			{
-				$supported[$format] = function_exists('image' . $format);
-			}
-		}
-
-		return $supported;
-	}
 }
