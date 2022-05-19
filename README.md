@@ -1,4 +1,4 @@
-#⛔️ Unsupported ⛔️
+# ⛔️ Unsupported ⛔️
 
 Replaced by https://github.com/DieSchittigs/classes-bundle
 and https://github.com/DieSchittigs/wrapper-bundle
