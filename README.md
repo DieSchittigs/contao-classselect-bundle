@@ -1,7 +1,7 @@
 # ⛔️ Unsupported ⛔️
 
-Replaced by https://github.com/DieSchittigs/classes-bundle
-and https://github.com/DieSchittigs/wrapper-bundle
+Replaced by https://github.com/DieSchittigs/contao-classes-bundle
+and https://github.com/DieSchittigs/contao-wrapper-bundle
 
 ## new in version 1.x
 Please read this before updating!
